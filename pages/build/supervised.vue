@@ -97,12 +97,12 @@
 </template>
 
 <script>
-import Layers from '../components/Layers'
-import ModelParameters from '../components/ModelParameters'
-import DatasetParameters from '../components/DatasetParameters'
-import ModelPreview from '../components/ModelPreview'
+import Layers from '../../components/Layers'
+import ModelParameters from '../../components/ModelParameters'
+import DatasetParameters from '../../components/DatasetParameters'
+import ModelPreview from '../../components/ModelPreview'
 export default {
-  name: 'Build',
+  name: 'Supervised',
   components: { ModelPreview, DatasetParameters, ModelParameters, Layers },
   middleware: 'authenticated',
   layout: 'navbar',
@@ -130,7 +130,7 @@ export default {
       const parent = this
 
       this.$axios
-        .post('/api/model/builder/', {
+        .post('/api/model/builder/supervised', {
           epochs: parameters.epochs,
           batchSize: parameters.batchSize,
           loss: parameters.lossElect,

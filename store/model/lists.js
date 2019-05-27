@@ -1,8 +1,8 @@
 export const state = () => ({
-  layersList: ['Dense', 'Conv2D', 'Dropout', 'MaxPooling2D', 'Flatten'],
-  datasetList: ['mnist'],
-  lossList: ['categorical_crossentropy'],
-  optimizerList: ['SGD', 'Adadelta']
+  layersList: [],
+  datasetList: [],
+  lossList: [],
+  optimizerList: []
 })
 
 export const mutations = {
@@ -21,7 +21,14 @@ export const mutations = {
 }
 
 export const actions = {
-  async initLists({ commit }) {
+  async initLists({ state, commit }) {
+    if (
+      state.layersList.length !== 0 &&
+      state.datasetList.length !== 0 &&
+      state.lossList.length !== 0 &&
+      state.optimizerList.length !== 0
+    )
+      return null
     this.$axios.setToken(this.$cookies.get('auth').access, 'Bearer')
     const { data } = await this.$axios.get('/api/model/options/')
     commit('SET_LAYERS_LIST', data.layers)
