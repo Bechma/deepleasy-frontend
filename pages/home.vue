@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <img src="/deepleasy.jpg" />
-    <v-flex v-if="max_epochs !== 0">
+  <v-layout align-center justify-center column fill-height>
+    <v-flex xs12 md12>
+      <h1>Welcome to Deepleasy</h1>
+      <v-img
+        :src="require('@/assets/img/deepleasy.png')"
+        aspect-ratio="0.8"
+        contain
+      ></v-img>
+    </v-flex>
+    <v-flex v-if="max_epochs !== 0" xs12 md12>
       <p>
         You have a <span v-if="running" style="color: green">running</span
         ><span v-else style="color: red">queued</span> task
       </p>
     </v-flex>
-    <v-flex v-else>
+    <v-flex v-else xs12 md12>
       <p>You don't have any running task at the moment</p>
     </v-flex>
-    <v-flex v-if="history_entries > 0">
+    <v-flex v-if="history_entries > 0" xs12 md12>
       <p>
         You have {{ history_entries }} entrie<span v-show="history_entries > 1"
           >s</span
@@ -18,10 +25,10 @@
         in the history
       </p>
     </v-flex>
-    <v-flex v-else>
+    <v-flex v-else xs12 md12>
       <p>You don't have any entry in the history</p>
     </v-flex>
-  </div>
+  </v-layout>
 </template>
 
 <script>

@@ -31,13 +31,14 @@
                           v-model="layer.units"
                           label="Number of neurons"
                           type="number"
+                          @input="unitsInput"
                         />
                       </v-flex>
                       <v-spacer></v-spacer>
                       <v-flex xs5 md5>
                         <v-select
                           v-model="layer.activation"
-                          :items="activations"
+                          :items="$store.state.model.lists.activationList"
                           label="Activation"
                         />
                       </v-flex>
@@ -48,6 +49,9 @@
                   v-model="n_clusters"
                   label="Number of cluster points"
                   type="number"
+                  min="1"
+                  max="300"
+                  @input="clusterInput"
                 />
                 <v-select
                   v-model="autoencoderOptimizer"
@@ -62,7 +66,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red" @click.prevent="removeLayer">
+                <v-btn
+                  color="red"
+                  :disabled="layers2send.length === 0"
+                  @click.prevent="removeLayer"
+                >
                   Remove Last Layer
                 </v-btn>
                 <v-btn color="orange" @click.prevent="addLayer">
@@ -143,20 +151,7 @@ export default {
         icon: 'warning',
         type: 'success',
         message: ''
-      },
-      activations: [
-        'softmax',
-        'elu',
-        'selu',
-        'softplus',
-        'softsign',
-        'relu',
-        'tanh',
-        'sigmoid',
-        'hard_sigmoid',
-        'exponential',
-        'linear'
-      ]
+      }
     }
   },
   async fetch({ store, params }) {
@@ -172,7 +167,7 @@ export default {
       const parent = this
 
       this.$axios
-        .post('/api/model/builder/unsupervised', {
+        .post('/api/model/builder/unsupervised/', {
           epochs: parameters.epochs,
           batchSize: parameters.batchSize,
           loss: parameters.lossElect,
@@ -214,6 +209,32 @@ export default {
     removeLayer() {
       if (this.layers2send.length !== 0)
         this.layers2send.splice(this.layers2send.length - 1, 1)
+    },
+    clusterInput() {
+      this.n_clusters = parseInt(this.n_clusters)
+      if (isNaN(this.n_clusters)) this.n_clusters = 10
+      else {
+        if (this.n_clusters < 1) {
+          this.$nextTick(() => (this.n_clusters = 1))
+        }
+        if (this.n_clusters > 300) {
+          this.$nextTick(() => (this.n_clusters = 300))
+        }
+      }
+    },
+    unitsInput() {
+      for (let i = 0; i < this.layers2send.length; i++) {
+        this.layers2send[i].units = parseInt(this.layers2send[i].units)
+        if (isNaN(this.layers2send[i].units)) this.layers2send[i].units = 10
+        else {
+          if (this.layers2send[i].units < 1) {
+            this.$nextTick(() => (this.layers2send[i].units = 1))
+          }
+          if (this.layers2send[i].units > 10000) {
+            this.$nextTick(() => (this.layers2send[i].units = 10000))
+          }
+        }
+      }
     }
   }
 }

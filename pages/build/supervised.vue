@@ -56,7 +56,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="orange" @click.prevent="removeLayer">
+                <v-btn
+                  color="orange"
+                  :disabled="layers2send.length === 0"
+                  @click.prevent="removeLayer"
+                >
                   Remove Layer
                 </v-btn>
               </v-card-actions>
@@ -130,7 +134,7 @@ export default {
       const parent = this
 
       this.$axios
-        .post('/api/model/builder/supervised', {
+        .post('/api/model/builder/supervised/', {
           epochs: parameters.epochs,
           batchSize: parameters.batchSize,
           loss: parameters.lossElect,

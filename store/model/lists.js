@@ -2,7 +2,8 @@ export const state = () => ({
   layersList: [],
   datasetList: [],
   lossList: [],
-  optimizerList: []
+  optimizerList: [],
+  activationList: []
 })
 
 export const mutations = {
@@ -17,6 +18,9 @@ export const mutations = {
   },
   SET_OPTIMIZER_LIST(state, act) {
     state.optimizerList = act
+  },
+  SET_ACTIVATION_LIST(state, act) {
+    state.activationList = act
   }
 }
 
@@ -26,7 +30,8 @@ export const actions = {
       state.layersList.length !== 0 &&
       state.datasetList.length !== 0 &&
       state.lossList.length !== 0 &&
-      state.optimizerList.length !== 0
+      state.optimizerList.length !== 0 &&
+      state.activationList.length !== 0
     )
       return null
     this.$axios.setToken(this.$cookies.get('auth').access, 'Bearer')
@@ -35,6 +40,7 @@ export const actions = {
     commit('SET_DATASET_LIST', data.datasets)
     commit('SET_LOSS_LIST', data.losses)
     commit('SET_OPTIMIZER_LIST', data.optimizers)
+    commit('SET_ACTIVATION_LIST', data.activations)
   }
 }
 
@@ -42,5 +48,6 @@ export const getters = {
   layersList: state => state.layersList,
   datasetList: state => state.datasetList,
   lossList: state => state.lossList,
-  optimizerList: state => state.optimizerList
+  optimizerList: state => state.optimizerList,
+  activationList: state => state.activationList
 }

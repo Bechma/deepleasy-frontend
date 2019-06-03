@@ -36,11 +36,40 @@
             </v-list-tile>
           </v-list-group>
         </div>
+        <v-list-tile @click.stop="dialog = true">
+          <v-list-tile-action>
+            <v-icon>not_interested</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
       <v-footer app fixed>
         <span>&copy; 2019</span>
       </v-footer>
     </v-navigation-drawer>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline">
+          Do you really want to logout?
+        </v-card-title>
+
+        <v-card-text>You will be redirected to the login page.</v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="red darken-1" flat="flat" @click="logout(false)">
+            No
+          </v-btn>
+
+          <v-btn color="green darken-1" flat="flat" @click="logout(true)">
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Deepleasy</v-toolbar-title>
@@ -53,6 +82,7 @@ export default {
   name: 'Navigation',
   data: () => ({
     drawer: null,
+    dialog: false,
     navigationItems: [
       {
         icon: 'dashboard',
@@ -92,14 +122,23 @@ export default {
         items: []
       },
       {
-        icon: 'not_interested',
-        text: 'Logout',
-        path: '/logout',
+        icon: 'check',
+        text: 'Test',
+        path: '/test',
         active: false,
         items: []
       }
     ]
-  })
+  }),
+  methods: {
+    logout(decision) {
+      this.dialog = false
+      if (decision) {
+        this.$cookies.remove('auth')
+        this.$router.push('/login')
+      }
+    }
+  }
 }
 </script>
 

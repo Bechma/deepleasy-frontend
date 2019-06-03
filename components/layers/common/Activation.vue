@@ -1,5 +1,9 @@
 <template>
-  <v-select v-model="activation" :items="activations" label="Activation" />
+  <v-select
+    v-model="activation"
+    :items="$store.state.model.lists.activationList"
+    label="Activation"
+  />
 </template>
 
 <script>
@@ -13,23 +17,6 @@ export default {
       set(value) {
         this.$store.commit('model/builder/SET_ACTIVATION', value)
       }
-    }
-  },
-  data() {
-    return {
-      activations: [
-        'softmax',
-        'elu',
-        'selu',
-        'softplus',
-        'softsign',
-        'relu',
-        'tanh',
-        'sigmoid',
-        'hard_sigmoid',
-        'exponential',
-        'linear'
-      ]
     }
   }
 }
