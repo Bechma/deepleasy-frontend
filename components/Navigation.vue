@@ -122,9 +122,9 @@ export default {
         items: []
       },
       {
-        icon: 'check',
-        text: 'Test',
-        path: '/test',
+        icon: 'ballot',
+        text: 'Predictions',
+        path: '/predictions',
         active: false,
         items: []
       }
