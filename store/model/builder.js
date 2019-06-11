@@ -1,6 +1,6 @@
 export const state = () => ({
   activation: 'softmax',
-  units: 5,
+  units: 10,
   kernel: { x: 3, y: 3 },
   padding: 'valid',
   rate: 0.2,
