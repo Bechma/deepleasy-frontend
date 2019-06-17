@@ -35,6 +35,7 @@ export const actions = {
     )
       return null
     this.$axios.setToken(this.$cookies.get('auth').access, 'Bearer')
+    this.$axios.setHeader('Content-Type', 'application/json')
     const { data } = await this.$axios.get('/api/model/options/')
     commit('SET_LAYERS_LIST', data.layers)
     commit('SET_DATASET_LIST', data.datasets)

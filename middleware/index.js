@@ -1,11 +1,11 @@
-export default async function({ redirect }) {
-  const auth = window.$nuxt.$cookies.get('auth')
+export default async function({ app, redirect }) {
+  const auth = app.$cookies.get('auth')
   try {
     const authenticated = auth && auth.refresh && auth.access
     if (authenticated) {
       let correcto = null
-      window.$nuxt.$axios.setHeader('Content-Type', 'application/json')
-      await window.$nuxt.$axios
+      app.$axios.setHeader('Content-Type', 'application/json')
+      await app.$axios
         .$post('/api/auth/verify/', { token: auth.access })
         .then(() => (correcto = true))
         .catch(() => (correcto = false))

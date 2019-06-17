@@ -1,14 +1,14 @@
 <template>
   <v-flex xs12 md12>
     <v-layout row>
-      <v-flex xs12 md9>
+      <v-flex xs12 md7>
         <v-select
           v-model="datasetElect"
           label="Dataset"
           :items="datasetItems"
         />
       </v-flex>
-      <v-flex xs12 md3>
+      <v-flex xs12 md5>
         <v-text-field
           v-model="trainPercentage"
           label="Percentage for training data"
@@ -16,7 +16,7 @@
           @input="train"
         />
       </v-flex>
-      <v-flex xs12 md12>
+      <v-flex xs12 md5>
         <span>Input Dim: {{ datasetIn }}</span>
         <v-spacer></v-spacer>
         <span>Output Dim: {{ datasetOut }}</span>

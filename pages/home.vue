@@ -46,11 +46,11 @@ export default {
   },
   beforeMount() {
     const parent = this
-    window.$nuxt.$axios.setToken(
-      window.$nuxt.$cookies.get('auth').access,
+    this.$axios.setToken(
+      this.$cookies.get('auth').access,
       'Bearer'
     )
-    window.$nuxt.$axios
+    this.$axios
       .get('/api/user/stats/')
       .then(function(res) {
         parent.epochs = res.data.epochs
