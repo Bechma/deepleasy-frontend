@@ -5,6 +5,40 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
     </v-toolbar>
+    <v-dialog v-model="dialog" max-width="500">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Full model history</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-layout justify-center align-center>
+            <v-chip v-if="!isOk" text-color="white" color="error">
+              {{ viewer.message }}
+            </v-chip>
+            <table v-else border="1">
+              <tr>
+                <th>Epoch</th>
+                <th>Accuracy</th>
+                <th>Loss</th>
+              </tr>
+              <tr v-for="(item, index) in viewer" :key="index">
+                <td>{{ index + 1 }}</td>
+                <td>{{ item.accuracy }}</td>
+                <td>{{ item.loss }}</td>
+              </tr>
+            </table>
+          </v-layout>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click="dialog = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-data-table :headers="headers" :items="registers" class="elevation-1">
       <template #items="props">
         <td>{{ timeFormat(props.item.timestamp) }}</td>
@@ -26,45 +60,9 @@
         <td class="text-xs-right">{{ props.item.loss }}</td>
         <td class="text-xs-right">{{ props.item.dataset }}</td>
         <td class="justify-center layout px-0">
-          <v-dialog v-model="dialog" max-width="500">
-            <template #activator="{ on }">
-              <v-icon small class="mr-2" @click="viewItem(props.item)">
-                visibility
-              </v-icon>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">Full model history</span>
-              </v-card-title>
-
-              <v-card-text>
-                <v-layout justify-center align-center>
-                  <v-chip v-if="!isOk" text-color="white" color="error">
-                    {{ viewer.message }}
-                  </v-chip>
-                  <table v-else border="1">
-                    <tr>
-                      <th>Epoch</th>
-                      <th>Accuracy</th>
-                      <th>Loss</th>
-                    </tr>
-                    <tr v-for="(item, index) in viewer" :key="index">
-                      <td>{{ index + 1 }}</td>
-                      <td>{{ item.accuracy }}</td>
-                      <td>{{ item.loss }}</td>
-                    </tr>
-                  </table>
-                </v-layout>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click="dialog = false">
-                  Close
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <v-icon small class="mr-2" @click="viewItem(props.item)">
+            visibility
+          </v-icon>
           <v-icon small @click="deleteItem(props.item)">
             delete
           </v-icon>
