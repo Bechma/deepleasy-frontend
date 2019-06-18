@@ -46,7 +46,7 @@
         </v-list-tile>
       </v-list>
       <v-footer app fixed>
-        <span>&copy; 2019</span>
+        <span>Bruno Chenoll &copy; 2019</span>
       </v-footer>
     </v-navigation-drawer>
     <v-dialog v-model="dialog" max-width="290">
